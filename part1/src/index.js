@@ -30,9 +30,19 @@ const App = (props) => {
       <Button handleClick={() => addToNeutral(neutral + 1)} text="neutral" />
       <Button handleClick={() => addToBad(bad + 1)} text="bad" />
       <h2>Statistics:</h2>
-      <div>good: {good}</div>
-      <div>neutral: {neutral}</div>
-      <div>bad: {bad}</div>
+      <div>
+        good: {good}
+        <br></br>
+        neutral: {neutral}
+        <br></br>
+        bad: {bad}
+        <br></br>
+        total: {good + neutral + bad}
+        <br></br>
+        average: {(good - bad) / (good + neutral + bad)}
+        <br></br>
+        positive: {good / (good + neutral + bad) * 100}%
+      </div>
     </div>
   )
 }
