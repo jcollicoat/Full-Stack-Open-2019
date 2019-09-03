@@ -5,6 +5,22 @@ const Button = props => (
   <button onClick={props.handleClick}>{props.text}</button>
 );
 
+const Statistic = props => {
+  if (props.text === 'positive') {
+    return (
+      <div>
+        {props.text}: {props.value}%
+      </div>
+    )
+  } else {
+    return (
+      <div>
+        {props.text}: {props.value}
+      </div>
+    )
+  }
+};
+
 const Statistics = props => {
   if (props.total <= 0) {
     return (
@@ -17,17 +33,12 @@ const Statistics = props => {
     return (
       <div>
         <h2>Statistics</h2>
-        good: {props.good}
-        <br></br>
-        neutral: {props.neutral}
-        <br></br>
-        bad: {props.bad}
-        <br></br>
-        total: {props.total}
-        <br></br>
-        average: {(props.good - props.bad) / (props.total)}
-        <br></br>
-        positive: {(props.good / (props.total)) * 100}%
+        <Statistic text='good' value={props.good} />
+        <Statistic text='neutral' value={props.neutral} />
+        <Statistic text='bad' value={props.bad} />
+        <Statistic text='total' value={props.total} />
+        <Statistic text='average' value={(props.good - props.bad) / props.total} />
+        <Statistic text='positive' value={(props.good / props.total) * 100} />
       </div>
     )
   }
