@@ -8,15 +8,17 @@ const Button = props => (
 const Statistic = props => {
   if (props.text === 'positive') {
     return (
-      <div>
-        {props.text}: {props.value}%
-      </div>
+      <tr>
+        <td>{props.text}:</td>
+        <td>{props.value}%</td>
+      </tr>
     )
   } else {
     return (
-      <div>
-        {props.text}: {props.value}
-      </div>
+      <tr>
+        <td>{props.text}:</td>
+        <td>{props.value}</td>
+      </tr>
     )
   }
 };
@@ -24,22 +26,26 @@ const Statistic = props => {
 const Statistics = props => {
   if (props.total <= 0) {
     return (
-      <div>
+      <>
         <h2>Statistics</h2>
         No statistics given
-      </div>
+      </>
     )
   } else {
     return (
-      <div>
+      <>
         <h2>Statistics</h2>
-        <Statistic text='good' value={props.good} />
-        <Statistic text='neutral' value={props.neutral} />
-        <Statistic text='bad' value={props.bad} />
-        <Statistic text='total' value={props.total} />
-        <Statistic text='average' value={(props.good - props.bad) / props.total} />
-        <Statistic text='positive' value={(props.good / props.total) * 100} />
-      </div>
+        <table>
+          <tbody>
+            <Statistic text="good" value={props.good} />
+            <Statistic text='neutral' value={props.neutral} />
+            <Statistic text='bad' value={props.bad} />
+            <Statistic text='total' value={props.total} />
+            <Statistic text='average' value={(props.good - props.bad) / props.total} />
+            <Statistic text='positive' value={(props.good / props.total) * 100} />
+          </tbody>
+        </table>
+      </>
     )
   }
 };
