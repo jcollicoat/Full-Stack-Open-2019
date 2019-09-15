@@ -10,7 +10,10 @@ const anecdotes = [
   "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it."
 ];
 
-const points = new Array(6+1).join('0').split('').map(parseFloat);
+const points = new Array(6 + 1)
+  .join("0")
+  .split("")
+  .map(parseFloat);
 
 const copy = [...points];
 
@@ -20,31 +23,43 @@ const Button = props => (
 
 const App = props => {
   const [selectedAnecdote, setSelectedAnecdote] = useState(0);
-  const [selectedTotal, setSelectedTotal] = useState(0);
   const [voteCount, setVoteCount] = useState(0);
+  const [winningAnecdote, setWinningAnecdote] = useState(0);
 
   const nextAnecdote = newAnecdote => {
     setSelectedAnecdote(newAnecdote);
-    setSelectedTotal(newAnecdote);
   };
 
   const addVote = newValue => {
     setVoteCount(newValue);
-    copy[selectedTotal] += 1;
-    console.log(copy);
+    copy[selectedAnecdote] += 1;
+  };
+
+  const calcWinner = newWinner => {
+    setWinningAnecdote(newWinner);
   };
 
   return (
     <>
+      <h2>Anecdote of the day</h2>
       <div>{props.anecdotes[selectedAnecdote]}</div>
-      <div>has {props.copy[selectedTotal]} votes</div>
+      <div>has {props.copy[selectedAnecdote]} votes</div>
       <Button
         handleClick={() => {
           nextAnecdote(Math.floor(Math.random() * anecdotes.length));
         }}
         text="Next anecdote"
       />
-      <Button handleClick={() => addVote(voteCount + 1)} text="Vote" />
+      <Button
+        handleClick={() => {
+          addVote(voteCount + 1);
+          calcWinner(copy.indexOf(Math.max(...copy)));
+        }}
+        text="Vote"
+      />
+      <h3>Anecdote with the most votes</h3>
+      <div>{props.anecdotes[winningAnecdote]}</div>
+      <div>has {props.copy[winningAnecdote]} votes</div>
     </>
   );
 };
