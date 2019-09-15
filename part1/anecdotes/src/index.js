@@ -10,28 +10,46 @@ const anecdotes = [
   "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it."
 ];
 
+const points = new Array(6+1).join('0').split('').map(parseFloat);
+
+const copy = [...points];
+
 const Button = props => (
   <button onClick={props.handleClick}>{props.text}</button>
 );
 
 const App = props => {
-  const [selected, setSelected] = useState(0);
+  const [selectedAnecdote, setSelectedAnecdote] = useState(0);
+  const [selectedTotal, setSelectedTotal] = useState(0);
+  const [voteCount, setVoteCount] = useState(0);
 
   const nextAnecdote = newAnecdote => {
-    setSelected(newAnecdote);
+    setSelectedAnecdote(newAnecdote);
+    setSelectedTotal(newAnecdote);
+  };
+
+  const addVote = newValue => {
+    setVoteCount(newValue);
+    copy[selectedTotal] += 1;
+    console.log(copy);
   };
 
   return (
     <>
-      <div>{props.anecdotes[selected]}</div>
+      <div>{props.anecdotes[selectedAnecdote]}</div>
+      <div>has {props.copy[selectedTotal]} votes</div>
       <Button
-        handleClick={() =>
-          nextAnecdote(Math.floor(Math.random() * anecdotes.length))
-        }
-        text='Next anecdote'
+        handleClick={() => {
+          nextAnecdote(Math.floor(Math.random() * anecdotes.length));
+        }}
+        text="Next anecdote"
       />
+      <Button handleClick={() => addVote(voteCount + 1)} text="Vote" />
     </>
   );
 };
 
-ReactDOM.render(<App anecdotes={anecdotes} />, document.getElementById("root"));
+ReactDOM.render(
+  <App anecdotes={anecdotes} points={points} copy={copy} />,
+  document.getElementById("root")
+);
