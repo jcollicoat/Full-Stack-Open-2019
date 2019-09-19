@@ -15,7 +15,7 @@ const Part = props => {
 const Total = props => {
   return (
     <p>
-      <strong>Total of {props.total} parts.</strong>
+      <strong>Total of {props.total} parts</strong>
     </p>
   );
 };
