@@ -5,6 +5,7 @@ const App = props => {
   const [persons, setPersons] = useState(props.persons);
   console.log(persons);
   const [newName, setNewName] = useState("");
+  const [newPhone, setNewPhone] = useState("");
 
   const rows = () =>
     persons.map(person => <Person key={person.id} person={person} />);
@@ -14,27 +15,42 @@ const App = props => {
     setNewName(event.target.value);
   };
 
-  const addName = event => {
+  const handlePhoneChange = event => {
+    console.log(event.target.value);
+    setNewPhone(event.target.value);
+  };
+
+  const addPerson = event => {
     event.preventDefault();
-    const nameObject = {
+    const personObject = {
       name: newName,
+      phone: newPhone,
       id: persons.length + 1
     };
 
-    if (persons.some(person => person.name === newName)) {
-      alert(`${newName} is already added to the phonebook`);
+    if (newName === "") {
+      alert(`Please enter a name.`);
+    } else if (newPhone === "") {
+      alert(`Please enter a phone number.`);
+    } else if (persons.some(person => person.name === newName)) {
+      alert(`${newName} is already added to the phonebook.`);
+    } else if (persons.some(person => person.phone === newPhone)) {
+      alert(`${newPhone} is already associated with someone in the phonebook.`);
     } else {
-      setPersons(persons.concat(nameObject));
+      setPersons(persons.concat(personObject));
       setNewName("");
+      setNewPhone("");
     }
   };
 
   return (
     <div>
       <h2>Phonebook</h2>
-      <form onSubmit={addName}>
+      <form onSubmit={addPerson}>
         <div>
           name: <input value={newName} onChange={handleNameChange} />
+          <br></br>
+          phone: <input value={newPhone} onChange={handlePhoneChange} />
         </div>
         <div>
           <button type="submit">add</button>

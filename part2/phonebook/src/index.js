@@ -6,6 +6,7 @@ import "./index.css";
 const persons = [
   {
     name: "Arto Hellas",
+    phone: "040-1234567",
     id: 1
   }
 ];
