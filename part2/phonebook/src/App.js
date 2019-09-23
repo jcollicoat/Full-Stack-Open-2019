@@ -3,12 +3,9 @@ import Person from "./components/Person";
 
 const App = props => {
   const [persons, setPersons] = useState(props.persons);
-  console.log(persons);
   const [newName, setNewName] = useState("");
   const [newPhone, setNewPhone] = useState("");
-
-  const rows = () =>
-    persons.map(person => <Person key={person.id} person={person} />);
+  const [filterValue, setFilterValue] = useState("");
 
   const handleNameChange = event => {
     console.log(event.target.value);
@@ -43,9 +40,23 @@ const App = props => {
     }
   };
 
+  const handleFilterChange = event => {
+    setFilterValue(event.target.value);
+  };
+
+  const personsToShow = persons.filter(person =>
+    person.name.includes(filterValue.toLowerCase())
+  );
+
+  const rows = () =>
+    personsToShow.map(person => <Person key={person.id} person={person} />);
+
   return (
     <div>
-      <h2>Phonebook</h2>
+      <h1>Phonebook</h1>
+      <h2>Filter</h2>
+      <input value={filterValue} onChange={handleFilterChange} />
+      <h2>Add a new person</h2>
       <form onSubmit={addPerson}>
         <div>
           name: <input value={newName} onChange={handleNameChange} />
