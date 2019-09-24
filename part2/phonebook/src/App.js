@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import Person from "./components/Person";
+import Filter from "./components/Filter";
+import PersonForm from "./components/PersonForm";
+import Phonebook from "./components/Phonebook";
 
 const App = props => {
   const [persons, setPersons] = useState(props.persons);
@@ -7,13 +9,15 @@ const App = props => {
   const [newPhone, setNewPhone] = useState("");
   const [filterValue, setFilterValue] = useState("");
 
+  const handleFilterChange = event => {
+    setFilterValue(event.target.value);
+  };
+
   const handleNameChange = event => {
-    console.log(event.target.value);
     setNewName(event.target.value);
   };
 
   const handlePhoneChange = event => {
-    console.log(event.target.value);
     setNewPhone(event.target.value);
   };
 
@@ -40,35 +44,22 @@ const App = props => {
     }
   };
 
-  const handleFilterChange = event => {
-    setFilterValue(event.target.value);
-  };
-
-  const personsToShow = persons.filter(person =>
-    person.name.includes(filterValue.toLowerCase())
-  );
-
-  const rows = () =>
-    personsToShow.map(person => <Person key={person.id} person={person} />);
-
   return (
     <div>
       <h1>Phonebook</h1>
       <h2>Filter</h2>
-      <input value={filterValue} onChange={handleFilterChange} />
+      <Filter value={filterValue} onChange={handleFilterChange} />
       <h2>Add a new person</h2>
-      <form onSubmit={addPerson}>
-        <div>
-          name: <input value={newName} onChange={handleNameChange} />
-          <br></br>
-          phone: <input value={newPhone} onChange={handlePhoneChange} />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <PersonForm
+        onSubmit={addPerson}
+        name={newName}
+        phone={newPhone}
+        nameChange={handleNameChange}
+        phoneChange={handlePhoneChange}
+        database={persons}
+      />
       <h2>Numbers</h2>
-      <ul>{rows()}</ul>
+      <Phonebook persons={persons} filterValue={filterValue} />
     </div>
   );
 };
