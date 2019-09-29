@@ -22,7 +22,11 @@ const App = () => {
       <h1>Countries</h1>
       <h4>Filter</h4>
       <Filter value={filterValue} onChange={handleFilterChange} />
-      <Countries countries={countries} filterValue={filterValue} />
+      <Countries
+        countries={countries}
+        filterValue={filterValue}
+        setFilterValue={setFilterValue}
+      />
     </div>
   );
 };

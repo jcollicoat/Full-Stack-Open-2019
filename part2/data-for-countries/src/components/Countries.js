@@ -1,28 +1,27 @@
 import React from "react";
-import ListCountry from "./ListCountry";
-import SingleCountry from "./SingleCountry";
+import Country from "./Country";
 
-const Countries = ({ countries, filterValue }) => {
+const Countries = ({ countries, filterValue, setFilterValue }) => {
   const filtered = countries.filter(country =>
-    country.name.toLowerCase().includes(filterValue)
+    country.name.toLowerCase().includes(filterValue.toLowerCase())
   );
 
-  const countriesList = () =>
+  const display = () =>
     filtered.map(country => (
-      <ListCountry key={country.numericCode} country={country} />
-    ));
-
-  const singleCountry = () =>
-    filtered.map(country => (
-      <SingleCountry key={country.numericCode} country={country} />
+      <Country
+        key={country.numericCode}
+        country={country}
+        filtered={filtered}
+        setFilterValue={setFilterValue}
+      />
     ));
 
   if (filtered.length > 10) {
     return <p>Too many matches, please search more specifically.</p>;
   } else if (filtered.length === 1) {
-    return singleCountry();
+    return display();
   } else {
-    return <ul>{countriesList()}</ul>;
+    return <ul>{display()}</ul>;
   }
 };
 
