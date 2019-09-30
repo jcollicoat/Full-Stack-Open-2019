@@ -20,6 +20,8 @@ const Countries = ({ countries, filterValue, setFilterValue }) => {
     return <p>Too many matches, please search more specifically.</p>;
   } else if (filtered.length === 1) {
     return display();
+  } else if (filtered.length === 0) {
+    return <p>No results, please try another search.</p>;
   } else {
     return <ul>{display()}</ul>;
   }

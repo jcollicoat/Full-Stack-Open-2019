@@ -11,7 +11,7 @@ const App = () => {
     axios.get("https://restcountries.eu/rest/v2/all").then(response => {
       setCountries(response.data);
     });
-  });
+  }, []);
 
   const handleFilterChange = event => {
     setFilterValue(event.target.value);
