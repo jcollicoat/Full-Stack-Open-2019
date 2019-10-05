@@ -3,7 +3,7 @@ import Person from "./Person";
 
 const Phonebook = ({ persons, filterValue }) => {
   const filtered = persons.filter(person =>
-    person.name.toLowerCase().includes(filterValue)
+    person.name.toLowerCase().includes(filterValue.toLowerCase())
   );
 
   const rows = () =>

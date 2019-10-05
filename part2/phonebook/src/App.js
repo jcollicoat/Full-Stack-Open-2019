@@ -4,6 +4,8 @@ import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 import Phonebook from "./components/Phonebook";
 
+import phonebookService from "./services/phonebook";
+
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
@@ -11,7 +13,7 @@ const App = () => {
   const [filterValue, setFilterValue] = useState("");
 
   useEffect(() => {
-    axios.get("http://localhost:3001/persons").then(response => {
+    phonebookService.getAll().then(response => {
       setPersons(response.data);
     });
   });
@@ -32,8 +34,7 @@ const App = () => {
     event.preventDefault();
     const personObject = {
       name: newName,
-      phone: newPhone,
-      id: persons.length + 1
+      phone: newPhone
     };
 
     if (newName === "") {
@@ -45,9 +46,11 @@ const App = () => {
     } else if (persons.some(person => person.phone === newPhone)) {
       alert(`${newPhone} is already associated with someone in the phonebook.`);
     } else {
-      setPersons(persons.concat(personObject));
-      setNewName("");
-      setNewPhone("");
+      phonebookService.create(personObject).then(response => {
+        setPersons(persons.concat(response.data));
+        setNewName("");
+        setNewPhone("");
+      });
     }
   };
 

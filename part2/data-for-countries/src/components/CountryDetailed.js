@@ -25,9 +25,7 @@ const CountryDetailed = ({ country }) => {
       .then(response => {
         setTemperature(response.data.main.temp);
         setWeatherIcon(
-          "http://openweathermap.org/img/wn/" +
-            response.data.weather[0].icon +
-            ".png"
+          `http://openweathermap.org/img/wn/${response.data.weather[0].icon}.png`
         );
         setWind(response.data.wind.speed);
       });
