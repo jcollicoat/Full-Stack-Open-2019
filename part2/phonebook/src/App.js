@@ -4,7 +4,7 @@ import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 import Phonebook from "./components/Phonebook";
 
-import phonebookService from "./services/phonebook";
+import phonebookService from "./services/phonebookService";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -13,8 +13,8 @@ const App = () => {
   const [filterValue, setFilterValue] = useState("");
 
   useEffect(() => {
-    phonebookService.getAll().then(response => {
-      setPersons(response.data);
+    phonebookService.getAll().then(initialPersons => {
+      setPersons(initialPersons);
     });
   });
 
@@ -46,8 +46,8 @@ const App = () => {
     } else if (persons.some(person => person.phone === newPhone)) {
       alert(`${newPhone} is already associated with someone in the phonebook.`);
     } else {
-      phonebookService.create(personObject).then(response => {
-        setPersons(persons.concat(response.data));
+      phonebookService.create(personObject).then(returnedPerson => {
+        setPersons(persons.concat(returnedPerson));
         setNewName("");
         setNewPhone("");
       });
