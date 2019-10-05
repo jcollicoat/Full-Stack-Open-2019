@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 import Phonebook from "./components/Phonebook";
@@ -54,6 +53,15 @@ const App = () => {
     }
   };
 
+  const deletePerson = (id, name) => {
+    const confirm = window.confirm(
+      "Are you sure you want to delete " + name + " from the phonebook?"
+    );
+    if (confirm === true) {
+      phonebookService.deletePerson(id);
+    }
+  };
+
   return (
     <div>
       <h1>Phonebook</h1>
@@ -69,7 +77,11 @@ const App = () => {
         database={persons}
       />
       <h2>Numbers</h2>
-      <Phonebook persons={persons} filterValue={filterValue} />
+      <Phonebook
+        persons={persons}
+        filterValue={filterValue}
+        deletePerson={deletePerson}
+      />
     </div>
   );
 };
